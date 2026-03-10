@@ -1,6 +1,7 @@
-# !/bin/bash
+#!/bin/bash
 # For Ubuntu 22.04
-# Intsalling Java
+
+# Installing Java
 sudo apt update
 sudo apt install fontconfig openjdk-21-jre -y
 java --version
@@ -19,15 +20,12 @@ sudo apt update
 sudo apt install docker.io -y
 sudo usermod -aG docker jenkins
 sudo usermod -aG docker ubuntu
+sudo systemctl enable docker
+sudo systemctl start docker
 sudo systemctl restart docker
-sudo chmod 777 /var/run/docker.sock
-
-# If you don't want to install Jenkins, you can create a container of Jenkins
-# docker run -d -p 8080:8080 -p 50000:50000 --name jenkins-container jenkins/jenkins:lts
 
 # Run Docker Container of Sonarqube
-docker run -d --name sonarqube -p 9000:9000 sonarqube:community
-
+sudo docker run -d --name sonarqube -p 9000:9000 sonarqube:community
 
 # Installing Terraform
 sudo apt install unzip -y
@@ -57,9 +55,9 @@ unzip awscliv2.zip
 sudo ./aws/install
 
 # Installing Trivy
-sudo apt-get install wget gnupg
+sudo apt-get install wget gnupg -y
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
 echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
-sudo apt-get install trivy
+sudo apt-get install trivy -y
 trivy --version
