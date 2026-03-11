@@ -2,30 +2,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tetris-v2
+  name: tetris
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tetris-v2
+      app: tetris
   template:
     metadata:
       labels:
-        app: tetris-v2
+        app: tetris
     spec:
       containers:
-      - name: tetris-v2
-        image: 747426/tetrisv2:1
+      - name: tetris
+        image: 747426/tetrisv1:1
         ports:
         - containerPort: 3000
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: tetris-v2-service
+  name: tetris-v1-service
 spec:
   selector:
-    app: tetris-v2
+    app: tetris
   ports:
   - protocol: TCP
     port: 80
